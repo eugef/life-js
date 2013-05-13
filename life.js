@@ -1,6 +1,5 @@
 // http://life.written.ru/game_of_life_review_by_gardner
 function Life(width, height, canvas) {
-	console.log('Life');
 	this.width = width;
 	this.height = height;
 	
@@ -10,44 +9,43 @@ function Life(width, height, canvas) {
 	this.m_h = Math.floor(this.canvas.height / this.height);
 	
 	this.field = [];
-	
-	this.generate();
-	this.display();
+	this.step = 0;
+	this.timer = 0;
 }
 
 Life.prototype = {
-    'generate': function(){
-		console.log('generate');
+    'generate': function(density) {
 		this.field = [];
+		this.step = 0;
 		for (i=0; i<this.width; i++) {
 			for (k=0; k<this.height; k++) {
 				if (k == 0) {
 					this.field[i] = [];
 				}
-				this.field[i][k] = Math.random() > 0.5 ? 1: 0;
+				this.field[i][k] = Math.random() < (density / 100) ? 1: 0;
 			}
 		}
     },
 	
 	'display': function() {
-		console.log('display');
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.ctx.fillStyle="#00FF00";
 		
 		for (i=0; i<this.width; i++) {
 			for (k=0; k<this.height; k++) {
-				//console.log('[' + i + '][' + k + '] = ' + this.field[i][k]);
 				if (this.field[i][k] == 1) {
-					this.ctx.fillRect(i*this.m_w, k*this.m_h, this.m_w, this.m_h);
+					//  drawrectagle with 1px padding
+					this.ctx.fillRect(i*this.m_w+1, k*this.m_h+1, this.m_w-2, this.m_h-2);
 				}
 			}
 		}
 	},
 	
 	'next': function() {
-		console.log('next');
+		this.step++;
 		var next_field = [];
 		var neighbor_count = 0;
+		
 		for (i=0; i<this.width; i++) {
 			for (k=0; k<this.height; k++) {
 				if (k == 0) {
@@ -57,10 +55,12 @@ Life.prototype = {
 				neighbor_count = this.neighbor(i, k);
 				
 				if (this.field[i][k] == 0) {
+					// birth of new cell
 					if (neighbor_count == 3) {
 						next_field[i][k] = 1;
 					}
 				} else {
+					// cell is still alive
 				    if ((neighbor_count == 2) || (neighbor_count == 3)) {
 						next_field[i][k] = 1;
 					}
@@ -73,33 +73,57 @@ Life.prototype = {
 	},
 	
 	'neighbor': function(i, k) {
-		r = this.getf(i-1, k-1) + this.getf(i, k-1) + this.getf(i+1, k-1) +
-			this.getf(i-1, k)   +        0          + this.getf(i+1, k)   +
-			this.getf(i-1, k+1) + this.getf(i, k+1) + this.getf(i+1, k+1);
+		r = this.cell(i-1, k-1) + this.cell(i, k-1) + this.cell(i+1, k-1) +
+			this.cell(i-1, k)   +        0          + this.cell(i+1, k)   +
+			this.cell(i-1, k+1) + this.cell(i, k+1) + this.cell(i+1, k+1);
 			
 		return r;
 	},
 	
-	// todo: toroid universe
-	'getf': function(i, k) {
-	    if ((this.field[i] !== undefined) && (this.field[i][k] !== undefined)) {
-			return this.field[i][k];
-		} else {
-			return 0;
+	'cell': function(i, k) {
+		// Toroid universe:
+		// Left border is connected to right
+		if (i < 0) {
+			i = this.width + i;
+		} else if (i >= this.width) {
+			i = i - this.width;
 		}
+		// Top Border is connected to bottom
+		if (k < 0) {
+			k = this.height + k;
+		} else if (k >= this.height) {
+			k = k - this.height;
+		}
+	    
+		return this.field[i][k];
 	},
 	
-	// todo: pause, start, stop
-	'go': function(msec) {
+	'play': function(msec) {
+		if (this.timer) {
+			this.pause();
+		}
+		
 		var l = this;
-		setInterval(
+		this.timer = setInterval(
 			function() {
 				l.next();
 				l.display();
-				
 			},
 			msec
 		);
+	},
+	
+	'pause': function() {
+		if (this.timer) {
+			clearInterval(this.timer);
+			this.timer = 0;
+		}	
+	},
+	
+	'restart': function(density) {
+		this.pause();
+		this.generate(density);
+		this.display();
 	}
 	
 };

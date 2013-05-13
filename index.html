@@ -4,15 +4,18 @@
 	<script src="life.js"></script>
   </head>
   <body>
-  <canvas id="myCanvas" width="1500" height="720" style="border:1px solid red;"></canvas>
+  <canvas id="myCanvas" width="1500" height="700" style="border:1px solid red;"></canvas>
+  <div class="toolbar">
+	Density: <input type="number" value="30" id="density" min="5" max="80" step="5" />
+	<a href="#" onClick="l.restart(document.getElementById('density').value); return false;">Restart</a> |
+	Speed: <input type="number" value="500" id="speed" min="10" max="1000" step="10" />
+	<a href="#" onClick="l.play(document.getElementById('speed').value); return false;">Play</a> |
+	<a href="#" onClick="l.pause(); return false;">Pause</a>
+  </div>
   <script type="text/javascript">
-    console.log('script');
-	var c=document.getElementById("myCanvas");
-    var l = new Life(500, 240, c);
-	
-	
-	//l.display();
-	l.go(200);
+	var c = document.getElementById("myCanvas");
+    var l = new Life(150, 70, c);
+	l.restart(document.getElementById('density').value);
   </script>
   </body>
 </html>
