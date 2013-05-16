@@ -20,7 +20,9 @@ function Life(width, height, canvas) {
 Life.prototype = {
     'generate': function(density) {
         this.field = [];
+        this.generations = [];
         this.step = 0;
+        
         var line = '';
         for (i=0; i<this.width; i++) {
             for (k=0; k<this.height; k++) {
