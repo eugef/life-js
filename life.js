@@ -1,5 +1,3 @@
-// http://life.written.ru/game_of_life_review_by_gardner
-
 // Requirements:
 // CryptoJS (https://code.google.com/p/crypto-js/#MD5)
 function Life(width, height, canvas) {
