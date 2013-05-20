@@ -1,22 +1,18 @@
+// Life core - calculate game rules.
+//
 // Requirements:
 // CryptoJS (https://code.google.com/p/crypto-js/#MD5)
-function Life(width, height, canvas) {
+function Life(width, height) {
     this.width = width;
     this.height = height;
-    
-    this.canvas = canvas;
-    this.ctx = this.canvas.getContext("2d");
-    this.m_w = Math.floor(this.canvas.width / this.width);
-    this.m_h = Math.floor(this.canvas.height / this.height);
     
     this.field = [];
     this.generations = [];
     this.step = 0;
-    this.timer = 0;
 }
 
 Life.prototype = {
-    'generate': function(density) {
+    generate: function(density) {
         this.field = [];
         this.generations = [];
         this.step = 0;
@@ -35,21 +31,7 @@ Life.prototype = {
         this.generations[this.step] = CryptoJS.MD5(line).toString();
     },
     
-    'display': function() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillStyle="#00FF00";
-        
-        for (i=0; i<this.width; i++) {
-            for (k=0; k<this.height; k++) {
-                if (this.field[i][k] == 1) {
-                    //  draw rectagle with 1px padding
-                    this.ctx.fillRect(i*this.m_w+1, k*this.m_h+1, this.m_w-2, this.m_h-2);
-                }
-            }
-        }
-    },
-    
-    'next': function() {
+    next: function() {
         this.step++;
         var next_field = [];
         var neighbor_count = 0;
@@ -92,7 +74,7 @@ Life.prototype = {
         }
     },
     
-    'neighbor': function(i, k) {
+    neighbor: function(i, k) {
         r = this.cell(i-1, k-1) + this.cell(i, k-1) + this.cell(i+1, k-1) +
             this.cell(i-1, k)   +        0          + this.cell(i+1, k)   +
             this.cell(i-1, k+1) + this.cell(i, k+1) + this.cell(i+1, k+1);
@@ -100,7 +82,7 @@ Life.prototype = {
         return r;
     },
     
-    'cell': function(i, k) {
+    cell: function(i, k) {
         // Toroid universe:
         // Left border is connected to right
         if (i < 0) {
@@ -117,37 +99,5 @@ Life.prototype = {
         
         return this.field[i][k];
     },
-    
-    'play': function(msec, autostop) {
-        if (this.timer) {
-            this.stop();
-        }
-        
-        var l = this;
-        this.timer = setInterval(
-            function() {
-                var next_step = l.next();
-                if (!next_step && autostop) {
-                    l.stop();
-                } else {
-                    l.display();
-                }
-            },
-            msec
-        );
-    },
-    
-    'stop': function() {
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = 0;
-        }    
-    },
-    
-    'restart': function(density) {
-        this.stop();
-        this.generate(density);
-        this.display();
-    }
     
 };

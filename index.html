@@ -2,22 +2,24 @@
     <head>
         <title>Life 1.0</title>
         <script src="life.js"></script>
+        <script src="life-player.js"></script>
         <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
     </head>
     <body>
         <canvas id="myCanvas" width="1560" height="720" style="border:1px solid red;"></canvas>
         <div class="toolbar">
             Density: <input type="number" value="30" id="density" min="5" max="80" step="5" />
-            <a href="#" onClick="l.restart(document.getElementById('density').value); return false;">Restart</a> |
+            <a href="#" onClick="p.restart(document.getElementById('density').value); return false;">Restart</a> |
             Speed: <input type="number" value="100" id="speed" min="10" max="1000" step="10" /> |
             <label for="autostop">Autostop:</label> <input type="checkbox" value="1" id="autostop" checked="true" /> |
-            <a href="#" onClick="l.play(document.getElementById('speed').value, document.getElementById('autostop').checked); return false;">Play</a> |
-            <a href="#" onClick="l.stop(); return false;">Stop</a>
+            <a href="#" onClick="p.play(document.getElementById('speed').value, document.getElementById('autostop').checked); return false;">Play</a> |
+            <a href="#" onClick="p.stop(); return false;">Stop</a>
         </div>
         <script type="text/javascript">
             var c = document.getElementById("myCanvas");
-            var l = new Life(260, 120, c);
-            l.restart(document.getElementById('density').value);
+            var l = new Life(260, 120);
+            var p = new LifePlayer(l, c);
+            p.restart(document.getElementById('density').value);
         </script>
     </body>
 </html>
