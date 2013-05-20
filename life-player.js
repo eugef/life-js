@@ -39,7 +39,7 @@ LifePlayer.prototype = {
         this.timer = setInterval(
             function() {
                 var next_step = p.life.next();
-                if (!next_step && autostop) {
+                if (autostop && (next_step != -1)) {
                     p.stop();
                 } else {
                     p.display();

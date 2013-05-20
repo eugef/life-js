@@ -67,11 +67,9 @@ Life.prototype = {
         
         // check if such generation already exists,
         // omit last (current one) generation.
-        if (this.generations.lastIndexOf(hash, -2) == -1) {
-            return true;
-        } else {
-            return false;
-        }
+        // return number of duplicate generation
+        // return -1 in case of unique generation
+        return this.generations.lastIndexOf(hash, -2);
     },
     
     neighbor: function(i, k) {
