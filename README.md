@@ -14,3 +14,9 @@ Compatibility:
 =======
 
 FF, Opera, Chrome, Safari, IE8+
+
+Related documentation:
+
+- Игра Жизнь и преобразование Фурье http://habrahabr.ru/post/180135/
+- Пишем и оптимизируем Жизнь Конуэя на JS http://habrahabr.ru/post/144237/
+- Javascript и canvas в игре «Жизнь» Джона Конвея http://habrahabr.ru/post/111686/
