@@ -17,6 +17,6 @@ FF, Opera, Chrome, Safari, IE8+
 
 Related documentation:
 
-- Игра Жизнь и преобразование Фурье http://habrahabr.ru/post/180135/
-- Пишем и оптимизируем Жизнь Конуэя на JS http://habrahabr.ru/post/144237/
-- Javascript и canvas в игре «Жизнь» Джона Конвея http://habrahabr.ru/post/111686/
+- РРіСЂР° Р–РёР·РЅСЊ Рё РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ Р¤СѓСЂСЊРµ http://habrahabr.ru/post/180135/
+- РџРёС€РµРј Рё РѕРїС‚РёРјРёР·РёСЂСѓРµРј Р–РёР·РЅСЊ РљРѕРЅСѓСЌСЏ РЅР° JS http://habrahabr.ru/post/144237/
+- Javascript Рё canvas РІ РёРіСЂРµ В«Р–РёР·РЅСЊВ» Р”Р¶РѕРЅР° РљРѕРЅРІРµСЏ http://habrahabr.ru/post/111686/
